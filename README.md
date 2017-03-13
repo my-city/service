@@ -1,5 +1,6 @@
-# Web Service to manage the request for my-city website
+# Web Service code to manage the request for my-city website
 
-## web service technology: NodeJS
-## database: Azure DocumentDB
+### Web Service technology: NodeJS
+
+### Database: Azure DocumentDB
 
