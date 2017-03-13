@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MyCity.Service", "MyCity.Service\MyCity.Service.njsproj", "{24AB00F6-DFB4-44C3-A805-C7D7FF5CD387}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MyCity.Service", "MyCity.Service\mycity.service.njsproj", "{24AB00F6-DFB4-44C3-A805-C7D7FF5CD387}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
