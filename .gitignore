@@ -35,3 +35,12 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+/MyCity.Service/obj/Debug
+/MyCity.Service/obj/Debug
+/MyCity.Service/bin
+/MyCity.Service/routes/index.js.map
+/MyCity.Service/routes/index.js
+/MyCity.Service/routes/user.js.map
+/MyCity.Service/routes/user.js
+/MyCity.Service/app.js.map
+/MyCity.Service/app.js
