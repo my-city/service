@@ -7,7 +7,7 @@
   },
   "description": "MyCity.Service",
   "author": {
-    "name": "aramk"
+    "name": "Aram Koukia"
   },
   "main":  "app.js",
   "dependencies": {
