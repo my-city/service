@@ -1,7 +1,7 @@
 ﻿import express = require('express');
 import { Router, Request, Response, NextFunction } from 'express';
-import { TrailData } from '../models/TrailData';
-import { TrailDocument } from '../models/TrailDocument';
+import { TrailData } from '../models/trail.data';
+import { TrailDocument } from '../models/trail.document';
 
 export class TrailRouter {
 
@@ -10,6 +10,21 @@ export class TrailRouter {
     constructor() {
         this.router = express.Router();
         this.init();
+    }
+
+    public GetTrails(req: Request, res: Response) {
+
+        var data: TrailData = new TrailData();
+
+        data.GetTrailsAsync().then(requestResult => {
+            res.status(200).send(requestResult);
+        }).catch(e => {
+            res.status(404).send({
+                message: e.message,
+                status: res.status
+            });
+        });
+
     }
 
     public GetTrail(req: Request, res: Response) {
@@ -77,10 +92,11 @@ export class TrailRouter {
     };
 
     public init() {
+        this.router.get("/", this.GetTrails),
         this.router.get("/:id", this.GetTrail),
-            this.router.post("/", this.AddTrail),
-            this.router.put("/", this.UpdateTrail),
-            this.router.delete("/:id", this.DeleteTrail)
+        this.router.post("/", this.AddTrail),
+        this.router.put("/", this.UpdateTrail),
+        this.router.delete("/:id", this.DeleteTrail)
     }
 
 }

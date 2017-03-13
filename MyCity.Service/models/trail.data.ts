@@ -1,7 +1,7 @@
-﻿import { DocumentClient, SqlQuerySpec, RequestCallback, QueryError, RequestOptions, SqlParameter, RetrievedDocument, Promise } from 'documentdb';
-//import { Promise } from 'async';
+﻿import { DocumentClient, SqlQuerySpec, RequestCallback, QueryError, RequestOptions, SqlParameter, RetrievedDocument } from 'documentdb';
+import { Promise } from 'promise';
 import { Config } from '../config';
-import { TrailDocument } from './TrailDocument';
+import { TrailDocument } from './trail.document';
 
 export class TrailData {
 
@@ -11,7 +11,38 @@ export class TrailData {
     constructor() {
 
         this._config = new Config();
-        this._client = new DocumentClient(this._config.host, { masterKey: this._config.authKey }, this._config.connectionPolicy);
+        this._client = new DocumentClient(this._config.host, { masterKey: this._config.authKey }, this._config.databaseId);
+
+    }
+
+    public GetTrailsAsync = () => {
+
+        var that = this;
+
+        return new Promise<TrailDocument>((resolve, reject) => {
+
+            var options: RequestOptions = {};
+            var params: SqlParameter[] = [];
+
+            var query: SqlQuerySpec = {
+                query: "select * from trails",
+                parameters: params
+            };
+
+            this._client.queryDocuments(this._config.trailsCollectionId, query)
+                .toArray((error: QueryError, result: RetrievedDocument<TrailDocument>[]): void => {
+
+                    if (error) { reject(error); }
+
+                    if (result.length > 0) {
+                        resolve(<Array<TrailDocument>>result);
+                    }
+                    else {
+                        reject({ message: 'Location not found' });
+                    }
+                });
+
+        });
 
     }
 
@@ -29,7 +60,7 @@ export class TrailData {
                 parameters: params
             };
 
-            this._client.queryDocuments(this._config.collectionUrl, query)
+            this._client.queryDocuments(this._config.trailsCollectionId, query)
                 .toArray((error: QueryError, result: RetrievedDocument<TrailDocument>[]): void => {
 
                     if (error) { reject(error); }
@@ -54,7 +85,7 @@ export class TrailData {
 
             var options: RequestOptions = {};
 
-            that._client.createDocument<TrailDocument>(that._config.collectionUrl, trail, options,
+            that._client.createDocument<TrailDocument>(that._config.trailsCollectionId, trail, options,
                 (error: QueryError, resource: TrailDocument, responseHeaders: any): void => {
                     if (error) {
                         reject(error);
@@ -73,7 +104,7 @@ export class TrailData {
         return new Promise<TrailDocument>((resolve, reject) => {
 
             var options: RequestOptions = {};
-            var documentLink = that._config.collectionUrl + '/docs/' + trail.id;
+            var documentLink = that._config.trailsCollectionId + '/docs/' + trail.id;
 
             that._client.replaceDocument<TrailDocument>(documentLink, trail, options,
                 (error: QueryError, resource: TrailDocument, responseHeaders: any): void => {
@@ -94,7 +125,7 @@ export class TrailData {
         return new Promise<TrailDocument>((resolve, reject) => {
 
             var options: RequestOptions = {};
-            var documentLink = that._config.collectionUrl + '/docs/' + id;
+            var documentLink = that._config.trailsCollectionId + '/docs/' + id;
 
             that._client.deleteDocument(documentLink, options,
                 (error: QueryError, resource: any, responseHeaders: any): void => {

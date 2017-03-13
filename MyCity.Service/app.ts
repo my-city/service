@@ -2,7 +2,7 @@
 import path = require('path');
 //import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
-import trails from './routes/TrailRouter';
+import trails from './routes/trail.router';
 import routes from './routes/index';
 var app = express();
 
@@ -31,6 +31,7 @@ app.use(function (req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use((err: any, req, res, next) => {
+
         res.status(err['status'] || 500);
         res.render('error', {
             message: err.message,
