@@ -6,7 +6,7 @@
 
 #### APIs
 
-*GET /routes
-*GET /routes/{id}
-*POST /routes
-*PUT /routes/{id}
+* GET /routes
+* GET /routes/{id}
+* POST /routes
+* PUT /routes/{id}
