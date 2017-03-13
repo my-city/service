@@ -1,10 +1,9 @@
 ﻿import express = require('express');
 import path = require('path');
-
+//import * as logger from 'morgan';
+import * as bodyParser from 'body-parser';
+import trails from './routes/TrailRouter';
 import routes from './routes/index';
-import users from './routes/user';
-import trails from './routes/trail';
-
 var app = express();
 
 // view engine setup
@@ -13,9 +12,11 @@ app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', routes);
-app.use('/users', users);
-app.use('/trails', trails);
+app.use('/api/v1/trails', trails);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
