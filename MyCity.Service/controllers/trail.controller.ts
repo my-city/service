@@ -3,25 +3,36 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { TrailData } from '../models/trail.data';
 import { TrailDocument } from '../models/trail.document';
 
-export class TrailRouter {
+export class TrailController {
 
     router: Router;
-
-    constructor() {
+    trailData;
+    constructor(trailData) {
         this.router = express.Router();
+        this.trailData = trailData;
         this.init();
     }
 
     public GetTrails(req: Request, res: Response) {
 
-        var data: TrailData = new TrailData();
+        var self = this;
 
-        data.GetTrailsAsync().then(requestResult => {
-            res.status(200).send(requestResult);
-        }).catch(e => {
-            res.status(404).send({
-                message: e.message,
-                status: res.status
+        var querySpec = {
+            query: 'SELECT * FROM root r WHERE r.completed=@completed',
+            parameters: [{
+                name: '@completed',
+                value: false
+            }]
+        };
+
+        self.trailData.find(querySpec, function (err, items) {
+            if (err) {
+                throw (err);
+            }
+
+            res.render('index', {
+                title: 'My ToDo List ',
+                tasks: items
             });
         });
 
@@ -30,9 +41,8 @@ export class TrailRouter {
     public GetTrail(req: Request, res: Response) {
 
         let query: string = req.params.id;
-        var data: TrailData = new TrailData();
 
-        data.GetTrailAsync(query).then(requestResult => {
+        data.GetTrail(query).then(requestResult => {
             res.status(200).send(requestResult);
         }).catch(e => {
             res.status(404).send({
@@ -48,7 +58,7 @@ export class TrailRouter {
         var doc: TrailDocument = <TrailDocument>req.body;
         var data: TrailData = new TrailData();
 
-        data.AddTrailAsync(doc).then(requestResult => {
+        data.AddTrail(doc).then(requestResult => {
             res.status(200).send(requestResult);
         }).catch(e => {
             res.status(404).send({
@@ -64,7 +74,7 @@ export class TrailRouter {
         var doc: TrailDocument = <TrailDocument>req.body;
         var data: TrailData = new TrailData();
 
-        data.UpdateTrailAsync(doc).then(requestResult => {
+        data.UpdateTrail(doc).then(requestResult => {
             res.status(200).send(requestResult);
         }).catch(e => {
             res.status(404).send({

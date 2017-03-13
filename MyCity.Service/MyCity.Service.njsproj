@@ -45,7 +45,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="routes\index.ts" />
-    <TypeScriptCompile Include="routes\trail.router.ts">
+    <TypeScriptCompile Include="controllers\trail.controller.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
@@ -72,6 +72,7 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="models\" />
+    <Folder Include="controllers\" />
     <Folder Include="untils\" />
     <Folder Include="routes\" />
     <Folder Include="Scripts\" />

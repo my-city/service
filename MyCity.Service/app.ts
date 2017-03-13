@@ -2,7 +2,7 @@
 import path = require('path');
 //import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
-import trails from './routes/trail.router';
+import trails from './controllers/trail.controller';
 import routes from './routes/index';
 var app = express();
 
