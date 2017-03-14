@@ -9,14 +9,18 @@ export class TrailDocument implements NewDocument<TrailDocument>,
     _ts: string;
     _self: string;
 
-    /* Photo Location Properties */
     name: string;
-    tags: string[];
-    address: {
-        street: string,
-        city: string,
-        zip: string,
-        country: string
+    rating: number;
+    region: string;
+    difficulty: string;
+    time: number;
+    distance: number;
+    camping: boolean;
+    dogFriendly: boolean;
+    publicTransit: boolean;
+    image: {
+        path: string,
+        title: string
     };
     geoLocation: {
         type: string;
