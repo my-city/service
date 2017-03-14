@@ -9,22 +9,38 @@ export class TrailDocument implements NewDocument<TrailDocument>,
     _ts: string;
     _self: string;
 
+    category: string; //ie: vancouver
     name: string;
+    approved: boolean;
+    description: string; // html
     rating: number;
-    region: string;
-    difficulty: string;
-    time: number;
-    distance: number;
-    camping: boolean;
+    voteCount: number;
+    region: string;    //ie: Tri-city
+    difficulty: string;  // hard, medium, easy
+    time: number;   // hours/minutes
+    distance: number;  // ie: from Vanouver
+    camping: boolean;  
     dogFriendly: boolean;
     publicTransit: boolean;
-    image: {
+    mapImages: {
         path: string,
         title: string
-    };
+    }[];
+    images: {
+        path: string,
+        title: string
+    }[];
     geoLocation: {
-        type: string;
+        address: string;
         coordinates: number[];
-    }
-
-}
+    };
+    comments: {
+        user: string,
+        email: string,
+        comment: string,
+        images: {
+            path: string,
+            title: string
+        }[];
+    }[];
+ }
