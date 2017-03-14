@@ -3,7 +3,7 @@ import path = require('path');
 //import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import trails from './controllers/trail.controller';
-import routes from './routes/index';
+import root from './controllers/index.controller';
 var app = express();
 
 // view engine setup
@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/', routes);
+app.use('/', root);
 app.use('/api/v1/trails', trails);
 
 

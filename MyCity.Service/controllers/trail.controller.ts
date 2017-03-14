@@ -1,16 +1,25 @@
 ﻿import express = require('express');
 import { Router, Request, Response, NextFunction } from 'express';
-import { TrailData } from '../models/trail.data';
+import { TrailsRepository } from '../repository/trails.repository';
 import { TrailDocument } from '../models/trail.document';
 
-export class TrailController {
+export class TrailsController {
 
     router: Router;
-    trailData;
-    constructor(trailData) {
+    trailsRepository;
+
+    constructor(trailsRepository) {
         this.router = express.Router();
-        this.trailData = trailData;
-        this.init();
+        this.trailsRepository = trailsRepository;
+        this.Init();
+    }
+
+    public Init() {
+        this.router.get("/", this.GetTrails),
+            this.router.get("/:id", this.GetTrail),
+            this.router.post("/", this.AddTrail),
+            this.router.put("/", this.UpdateTrail),
+            this.router.delete("/:id", this.DeleteTrail)
     }
 
     public GetTrails(req: Request, res: Response) {
@@ -25,7 +34,7 @@ export class TrailController {
             }]
         };
 
-        self.trailData.find(querySpec, function (err, items) {
+        self.trailsRepository.find(querySpec, function (err, items) {
             if (err) {
                 throw (err);
             }
@@ -42,7 +51,7 @@ export class TrailController {
 
         let query: string = req.params.id;
 
-        data.GetTrail(query).then(requestResult => {
+        this.trailsRepository.GetTrail(query).then(requestResult => {
             res.status(200).send(requestResult);
         }).catch(e => {
             res.status(404).send({
@@ -56,9 +65,8 @@ export class TrailController {
     public AddTrail(req: Request, res: Response) {
 
         var doc: TrailDocument = <TrailDocument>req.body;
-        var data: TrailData = new TrailData();
 
-        data.AddTrail(doc).then(requestResult => {
+        this.trailsRepository.AddTrail(doc).then(requestResult => {
             res.status(200).send(requestResult);
         }).catch(e => {
             res.status(404).send({
@@ -72,9 +80,8 @@ export class TrailController {
     public UpdateTrail(req: Request, res: Response) {
 
         var doc: TrailDocument = <TrailDocument>req.body;
-        var data: TrailData = new TrailData();
 
-        data.UpdateTrail(doc).then(requestResult => {
+        this.trailsRepository.UpdateTrail(doc).then(requestResult => {
             res.status(200).send(requestResult);
         }).catch(e => {
             res.status(404).send({
@@ -88,9 +95,8 @@ export class TrailController {
     public DeleteTrail(req: Request, res: Response) {
 
         let query: string = req.params.id;
-        var data: TrailData = new TrailData();
 
-        data.DeleteTrailAsync(query).then(requestResult => {
+        this.trailsRepository.DeleteTrailAsync(query).then(requestResult => {
             res.status(204).send();
         }).catch(e => {
             res.status(404).send({
@@ -101,18 +107,11 @@ export class TrailController {
 
     };
 
-    public init() {
-        this.router.get("/", this.GetTrails),
-        this.router.get("/:id", this.GetTrail),
-        this.router.post("/", this.AddTrail),
-        this.router.put("/", this.UpdateTrail),
-        this.router.delete("/:id", this.DeleteTrail)
-    }
-
 }
 
-let trailRouter = new TrailRouter();
-trailRouter.init();
-var router = trailRouter.router;
+
+let trailsController = new TrailsController(new TrailsRepository( null, "mycity", "trails"));
+trailsController.Init();
+var router = trailsController.router;
 
 export default router;

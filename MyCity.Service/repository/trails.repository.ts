@@ -3,7 +3,7 @@ import { Promise } from 'promise';
 import { Config } from '../config';
 import { DocumentdbUtils } from '../untils/documentdb.utils';
 
-export class TrailData {
+export class TrailsRepository {
 
     private client;
     private databaseId;
@@ -19,7 +19,6 @@ export class TrailData {
         this.documentDbUtils = new DocumentdbUtils();//docdbUtils;
         this.database = null;
         this.collection = null;
-
     }
 
     public Init(callback) {

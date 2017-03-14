@@ -37,14 +37,13 @@
     <TypeScriptCompile Include="config.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="index.ts" />
-    <TypeScriptCompile Include="models\trail.data.ts">
+    <TypeScriptCompile Include="repository\trails.repository.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="models\trail.document.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="routes\index.ts" />
+    <TypeScriptCompile Include="controllers\index.controller.ts" />
     <TypeScriptCompile Include="controllers\trail.controller.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -73,8 +72,8 @@
     <Folder Include="bin\" />
     <Folder Include="models\" />
     <Folder Include="controllers\" />
+    <Folder Include="repository\" />
     <Folder Include="untils\" />
-    <Folder Include="routes\" />
     <Folder Include="Scripts\" />
     <Folder Include="Scripts\typings\" />
     <Folder Include="Scripts\typings\node\" />
