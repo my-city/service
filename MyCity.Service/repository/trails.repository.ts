@@ -5,7 +5,7 @@ import { DocumentdbUtils } from '../untils/documentdb.utils';
 
 export class TrailsRepository {
 
-    private client;
+    private client: DocumentClient;
     private databaseId;
     private collectionId;
     private database;
@@ -23,7 +23,6 @@ export class TrailsRepository {
 
     public Init(callback) {
         var self = this;
-
         self.documentDbUtils.GetOrCreateDatabase(self.client, self.databaseId, function (err, db) {
             if (err) {
                 callback(err);
@@ -43,7 +42,6 @@ export class TrailsRepository {
 
     public Find(querySpec, callback) {
         var self = this;
-
         self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
             if (err) {
                 callback(err);
@@ -112,128 +110,5 @@ export class TrailsRepository {
             }
         });
     }
-
-    //public GetTrailsAsync = () => {
-
-    //    var that = this;
-
-    //    return new Promise<TrailDocument>((resolve, reject) => {
-
-    //        var options: RequestOptions = {};
-    //        var params: SqlParameter[] = [];
-
-    //        var query: SqlQuerySpec = {
-    //            query: "select * from trails",
-    //            parameters: params
-    //        };
-
-    //        this._client.queryDocuments(this._config.trailsCollectionId, query)
-    //            .toArray((error: QueryError, result: RetrievedDocument<TrailDocument>[]): void => {
-
-    //                if (error) { reject(error); }
-
-    //                if (result.length > 0) {
-    //                    resolve(<Array<TrailDocument>>result);
-    //                }
-    //                else {
-    //                    reject({ message: 'Location not found' });
-    //                }
-    //            });
-
-    //    });
-
-    //}
-
-    //public GetTrailAsync = (id: string) => {
-
-    //    var that = this;
-
-    //    return new Promise<TrailDocument>((resolve, reject) => {
-
-    //        var options: RequestOptions = {};
-    //        var params: SqlParameter[] = [{ name: "@id", value: id }];
-
-    //        var query: SqlQuerySpec = {
-    //            query: "select * from heros where heros.id=@id",
-    //            parameters: params
-    //        };
-
-    //        this._client.queryDocuments(this._config.trailsCollectionId, query)
-    //            .toArray((error: QueryError, result: RetrievedDocument<TrailDocument>[]): void => {
-
-    //                if (error) { reject(error); }
-
-    //                if (result.length > 0) {
-    //                    resolve(<TrailDocument>result[0]);
-    //                }
-    //                else {
-    //                    reject({ message: 'Location not found' });
-    //                }
-    //            });
-
-    //    });
-
-    //}
-
-    //public AddTrailAsync = (trail: TrailDocument) => {
-
-    //    var that = this;
-
-    //    return new Promise<TrailDocument>((resolve, reject) => {
-
-    //        var options: RequestOptions = {};
-
-    //        that._client.createDocument<TrailDocument>(that._config.trailsCollectionId, trail, options,
-    //            (error: QueryError, resource: TrailDocument, responseHeaders: any): void => {
-    //                if (error) {
-    //                    reject(error);
-    //                }
-    //                resolve(resource);
-    //            });
-
-    //    });
-
-    //}
-
-    //public UpdateTrailAsync = (trail: TrailDocument) => {
-
-    //    var that = this;
-
-    //    return new Promise<TrailDocument>((resolve, reject) => {
-
-    //        var options: RequestOptions = {};
-    //        var documentLink = that._config.trailsCollectionId + '/docs/' + trail.id;
-
-    //        that._client.replaceDocument<TrailDocument>(documentLink, trail, options,
-    //            (error: QueryError, resource: TrailDocument, responseHeaders: any): void => {
-    //                if (error) {
-    //                    reject(error);
-    //                }
-    //                resolve(resource);
-    //            });
-
-    //    });
-
-    //}
-
-    //public DeleteTrailAsync = (id: string) => {
-
-    //    var that = this;
-
-    //    return new Promise<TrailDocument>((resolve, reject) => {
-
-    //        var options: RequestOptions = {};
-    //        var documentLink = that._config.trailsCollectionId + '/docs/' + id;
-
-    //        that._client.deleteDocument(documentLink, options,
-    //            (error: QueryError, resource: any, responseHeaders: any): void => {
-    //                if (error) {
-    //                    reject(error);
-    //                }
-    //                resolve(resource);
-    //            });
-    //    });
-
-    //}
 
 }

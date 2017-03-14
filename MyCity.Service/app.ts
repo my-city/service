@@ -2,9 +2,14 @@
 import path = require('path');
 //import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
-import trails from './controllers/trail.controller';
+import TrailsContoller = require('./controllers/trail.controller');
+import TrailsRepository = require('./repository/trails.repository');
+
 import attractions from './controllers/attractions.controller';
 import root from './controllers/index.controller';
+
+var DocumentDBClient = require('documentdb').DocumentClient;
+
 var app = express();
 
 // view engine setup
@@ -15,8 +20,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', root);
-app.use('/trails', trails);
 app.use('/attractions', attractions);
+
+// TODO: rafactor to move to another class
+var docDbClient = new DocumentDBClient("DOCUMENT_DB_HOST", { masterKey: "DOC_DB PRIVATE KEY" });
+var trailsRepository = new TrailsRepository.TrailsRepository(docDbClient, "mycity", "trails");
+trailsRepository.Init(function (err) { if (err) throw err; });
+
+var trailsController = new TrailsContoller.TrailsController(trailsRepository);
+
+app.get('/trails', trailsController.GetTrails.bind(trailsController));
+app.post('/trails', trailsController.AddTrail.bind(trailsController));
+app.put('/trails/', trailsController.UpdateTrail.bind(trailsController));
 
 
 // catch 404 and forward to error handler
