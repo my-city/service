@@ -90,7 +90,7 @@ export class TrailsController {
 
 }
 
-let trailsController = new TrailsController(new TrailsRepository(documentDb.DocumentClient, "mycity", "trails"));
+var trailsController = new TrailsController(new TrailsRepository(documentDb.DocumentClient, "mycity", "trails"));
 trailsController.Init();
 var router = trailsController.router;
 

@@ -3,6 +3,7 @@ import path = require('path');
 //import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import trails from './controllers/trail.controller';
+import attractions from './controllers/attractions.controller';
 import root from './controllers/index.controller';
 var app = express();
 
@@ -11,11 +12,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', root);
-app.use('/api/v1/trails', trails);
+app.use('/trails', trails);
+app.use('/attractions', attractions);
 
 
 // catch 404 and forward to error handler
