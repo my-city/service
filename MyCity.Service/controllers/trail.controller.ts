@@ -1,12 +1,15 @@
 ﻿import express = require('express');
+import async = require('async');
+import documentDb = require('documentdb');
 import { Router, Request, Response, NextFunction } from 'express';
 import { TrailsRepository } from '../repository/trails.repository';
 import { TrailDocument } from '../models/trail.document';
 
+
 export class TrailsController {
 
     router: Router;
-    trailsRepository;
+    private trailsRepository : TrailsRepository;
 
     constructor(trailsRepository) {
         this.router = express.Router();
@@ -15,11 +18,11 @@ export class TrailsController {
     }
 
     public Init() {
-        this.router.get("/", this.GetTrails),
-            this.router.get("/:id", this.GetTrail),
-            this.router.post("/", this.AddTrail),
-            this.router.put("/", this.UpdateTrail),
-            this.router.delete("/:id", this.DeleteTrail)
+        this.router.get("/", this.GetTrails);
+        //this.router.get("/:id", this.GetTrail);
+        this.router.post("/", this.AddTrail);
+        this.router.put("/", this.UpdateTrail);
+        //this.router.delete("/:id", this.DeleteTrail);
     }
 
     public GetTrails(req: Request, res: Response) {
@@ -34,7 +37,7 @@ export class TrailsController {
             }]
         };
 
-        self.trailsRepository.find(querySpec, function (err, items) {
+        self.trailsRepository.Find(querySpec, function (err, items) {
             if (err) {
                 throw (err);
             }
@@ -47,70 +50,47 @@ export class TrailsController {
 
     }
 
-    public GetTrail(req: Request, res: Response) {
-
-        let query: string = req.params.id;
-
-        this.trailsRepository.GetTrail(query).then(requestResult => {
-            res.status(200).send(requestResult);
-        }).catch(e => {
-            res.status(404).send({
-                message: e.message,
-                status: res.status
-            });
-        });
-
-    }
-
     public AddTrail(req: Request, res: Response) {
 
-        var doc: TrailDocument = <TrailDocument>req.body;
+        var self = this;
+        var item = req.body;
 
-        this.trailsRepository.AddTrail(doc).then(requestResult => {
-            res.status(200).send(requestResult);
-        }).catch(e => {
-            res.status(404).send({
-                message: e.message,
-                status: res.status
-            });
+        self.trailsRepository.Add(item, function (err) {
+            if (err) {
+                throw (err);
+            }
+
+            res.redirect('/');
         });
 
     }
 
     public UpdateTrail(req: Request, res: Response) {
 
-        var doc: TrailDocument = <TrailDocument>req.body;
+        var self = this;
+        var completedTasks = Object.keys(req.body);
 
-        this.trailsRepository.UpdateTrail(doc).then(requestResult => {
-            res.status(200).send(requestResult);
-        }).catch(e => {
-            res.status(404).send({
-                message: e.message,
-                status: 404
+        async.forEach(completedTasks, function taskIterator(completedTask, callback) {
+            self.trailsRepository.Update(completedTask, function (err) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
             });
+        }, function goHome(err) {
+            if (err) {
+                throw err;
+            } else {
+                res.redirect('/');
+            }
         });
 
     }
 
-    public DeleteTrail(req: Request, res: Response) {
-
-        let query: string = req.params.id;
-
-        this.trailsRepository.DeleteTrailAsync(query).then(requestResult => {
-            res.status(204).send();
-        }).catch(e => {
-            res.status(404).send({
-                message: e.message,
-                status: 404
-            });
-        });
-
-    };
-
 }
 
-
-let trailsController = new TrailsController(new TrailsRepository( null, "mycity", "trails"));
+let trailsController = new TrailsController(new TrailsRepository(documentDb.DocumentClient, "mycity", "trails"));
 trailsController.Init();
 var router = trailsController.router;
 

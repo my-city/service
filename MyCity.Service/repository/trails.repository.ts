@@ -41,7 +41,7 @@ export class TrailsRepository {
         });
     }
 
-    public GetTrail(querySpec, callback) {
+    public Find(querySpec, callback) {
         var self = this;
 
         self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
@@ -54,7 +54,7 @@ export class TrailsRepository {
         });
     }
 
-    public AddTrail (item, callback) {
+    public Add (item, callback) {
         var self = this;
 
         item.date = Date.now();
@@ -70,10 +70,10 @@ export class TrailsRepository {
         });
     }
 
-    public UpdateTrail (itemId, callback) {
+    public Update (itemId, callback) {
         var self = this;
 
-        self.GetItem(itemId, function (err, doc) {
+        self.Find(itemId, function (err, doc) {
             if (err) {
                 callback(err);
 
@@ -92,7 +92,7 @@ export class TrailsRepository {
         });
     }
 
-    public GetTrail (itemId, callback) {
+    public Get (itemId, callback) {
         var self = this;
 
         var querySpec = {
