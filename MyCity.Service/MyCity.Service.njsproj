@@ -57,6 +57,7 @@
     <TypeScriptCompile Include="typings\globals\mime\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\serve-static\index.d.ts" />
     <None Include="mycityservice - Web Deploy.pubxml" />
+    <Content Include="bin\Microsoft.NodejsTools.WebRole.dll" />
     <Content Include="iisnode.yml">
       <SubType>Code</SubType>
     </Content>
@@ -66,7 +67,6 @@
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config" />
     <Content Include="bin\ChangeConfig.ps1" />
     <Content Include="bin\download.ps1" />
     <Content Include="bin\setup_web.cmd" />

@@ -1,5 +1,4 @@
 ﻿import { DocumentClient, SqlQuerySpec, RequestCallback, QueryError, RequestOptions, SqlParameter, RetrievedDocument } from 'documentdb';
-import { Promise } from 'promise';
 import { Config } from '../config';
 import { DocumentdbUtils } from '../untils/documentdb.utils';
 import { AttractionDocument } from '../models/attraction.document';
