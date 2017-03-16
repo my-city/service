@@ -33,6 +33,7 @@ citiesRepository.Init(function (err) { if (err) throw err; });
 
 var citiesController = new CitiesContoller.CitiesController(citiesRepository);
 app.get('/cities', citiesController.GetCities.bind(citiesController));
+app.get('/cities/:id', citiesController.GetCity.bind(citiesController));
 
 var trailsRepository = new TrailsRepository.TrailsRepository(docDbClient, "mycity", "trails");
 trailsRepository.Init(function (err) { if (err) throw err; });

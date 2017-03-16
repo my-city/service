@@ -37,7 +37,21 @@ export class CitiesController {
             }
 
             res.status(200).json(items);
+        });
 
+    }
+
+    public GetCity(req: Request, res: Response) {
+
+        var self = this;
+        let id: string = req.params.id;
+
+        self.CitiesRepository.Get(id, function (err, item) {
+            if (err) {
+                throw (err);
+            }
+
+            res.status(200).json(item);
         });
 
     }

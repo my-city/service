@@ -52,5 +52,26 @@ export class CitiesRepository {
         });
     }
 
+    public Get(itemId, callback) {
+        var self = this;
+
+        var querySpec = {
+            query: 'SELECT * FROM root r WHERE r.id = @id',
+            parameters: [{
+                name: '@id',
+                value: itemId
+            }]
+        };
+
+        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
+            if (err) {
+                callback(err);
+
+            } else {
+                callback(null, results[0]);
+            }
+        });
+    }
+
 
 }
