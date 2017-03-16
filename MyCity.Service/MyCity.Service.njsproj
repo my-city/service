@@ -38,8 +38,11 @@
     <TypeScriptCompile Include="config.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="controllers\cities.controller.ts" />
     <TypeScriptCompile Include="controllers\attractions.controller.ts" />
     <TypeScriptCompile Include="models\attraction.document.ts" />
+    <TypeScriptCompile Include="models\city.document.ts" />
+    <TypeScriptCompile Include="repository\cities.repository.ts" />
     <TypeScriptCompile Include="repository\attractions.repository.ts" />
     <TypeScriptCompile Include="repository\trails.repository.ts">
       <SubType>Code</SubType>
@@ -48,7 +51,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="controllers\index.controller.ts" />
-    <TypeScriptCompile Include="controllers\trail.controller.ts">
+    <TypeScriptCompile Include="controllers\trails.controller.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />

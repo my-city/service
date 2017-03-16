@@ -2,8 +2,11 @@
 import path = require('path');
 //import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
-import TrailsContoller = require('./controllers/trail.controller');
+import TrailsContoller = require('./controllers/trails.controller');
 import TrailsRepository = require('./repository/trails.repository');
+
+import CitiesContoller = require('./controllers/cities.controller');
+import CitiesRepository = require('./repository/cities.repository');
 
 import attractions from './controllers/attractions.controller';
 import root from './controllers/index.controller';
@@ -24,6 +27,13 @@ app.use('/attractions', attractions);
 
 // TODO: rafactor to move to another class
 var docDbClient = new DocumentDBClient("DOCUMENT_DB_HOST", { masterKey: "DOC_DB PRIVATE KEY" });
+
+var citiesRepository = new CitiesRepository.CitiesRepository(docDbClient, "mycity", "cities");
+citiesRepository.Init(function (err) { if (err) throw err; });
+
+var citiesController = new CitiesContoller.CitiesController(citiesRepository);
+app.get('/cities', citiesController.GetCities.bind(citiesController));
+
 var trailsRepository = new TrailsRepository.TrailsRepository(docDbClient, "mycity", "trails");
 trailsRepository.Init(function (err) { if (err) throw err; });
 
@@ -32,7 +42,6 @@ var trailsController = new TrailsContoller.TrailsController(trailsRepository);
 app.get('/trails', trailsController.GetTrails.bind(trailsController));
 app.post('/trails', trailsController.AddTrail.bind(trailsController));
 app.put('/trails/', trailsController.UpdateTrail.bind(trailsController));
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
