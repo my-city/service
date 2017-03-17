@@ -41,6 +41,8 @@ trailsRepository.Init(function (err) { if (err) throw err; });
 var trailsController = new TrailsContoller.TrailsController(trailsRepository);
 
 app.get('/trails', trailsController.GetTrails.bind(trailsController));
+app.get('/trails/:id', trailsController.GetTrail.bind(trailsController));
+
 app.post('/trails', trailsController.AddTrail.bind(trailsController));
 app.put('/trails/', trailsController.UpdateTrail.bind(trailsController));
 

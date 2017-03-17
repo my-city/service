@@ -46,6 +46,22 @@ export class TrailsController {
 
     }
 
+    public GetTrail(req: Request, res: Response) {
+
+        var self = this;
+        let id: string = req.params.id;
+
+        self.TrailsRepository.Get(id, function (err, item) {
+            if (err) {
+                throw (err);
+            }
+
+            res.status(200).json(item);
+        });
+
+    }
+
+
     public AddTrail(req: Request, res: Response) {
 
         var self = this;
