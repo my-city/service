@@ -38,10 +38,13 @@
     <TypeScriptCompile Include="config.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="controllers\instagram.controller.ts" />
     <TypeScriptCompile Include="controllers\cities.controller.ts" />
     <TypeScriptCompile Include="controllers\attractions.controller.ts" />
+    <TypeScriptCompile Include="models\instagram.document.ts" />
     <TypeScriptCompile Include="models\attraction.document.ts" />
     <TypeScriptCompile Include="models\city.document.ts" />
+    <TypeScriptCompile Include="repository\instagram.repository.ts" />
     <TypeScriptCompile Include="repository\cities.repository.ts" />
     <TypeScriptCompile Include="repository\attractions.repository.ts" />
     <TypeScriptCompile Include="repository\trails.repository.ts">

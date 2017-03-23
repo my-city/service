@@ -8,6 +8,9 @@ import TrailsRepository = require('./repository/trails.repository');
 import CitiesContoller = require('./controllers/cities.controller');
 import CitiesRepository = require('./repository/cities.repository');
 
+import InstagramContoller = require('./controllers/instagram.controller');
+import InstagramRepository = require('./repository/instagram.repository');
+
 import attractions from './controllers/attractions.controller';
 import root from './controllers/index.controller';
 
@@ -45,6 +48,13 @@ app.get('/trails/:id', trailsController.GetTrail.bind(trailsController));
 
 app.post('/trails', trailsController.AddTrail.bind(trailsController));
 app.put('/trails/', trailsController.UpdateTrail.bind(trailsController));
+
+
+var instagramRepository = new InstagramRepository.InstagramRepository();
+var instagramController = new InstagramContoller.InstagramController(instagramRepository);
+
+app.get('/pictures/:id', instagramController.GetPictures.bind(instagramController));
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
