@@ -8,6 +8,9 @@ import TrailsRepository = require('./repository/trails.repository');
 import CitiesContoller = require('./controllers/cities.controller');
 import CitiesRepository = require('./repository/cities.repository');
 
+import UsersContoller = require('./controllers/users.controller');
+import UsersRepository = require('./repository/users.repository');
+
 import InstagramContoller = require('./controllers/instagram.controller');
 import InstagramRepository = require('./repository/instagram.repository');
 
@@ -49,6 +52,12 @@ app.get('/trails/:id', trailsController.GetTrail.bind(trailsController));
 app.post('/trails', trailsController.AddTrail.bind(trailsController));
 app.put('/trails/', trailsController.UpdateTrail.bind(trailsController));
 
+var usersRepository = new UsersRepository.UsersRepository(docDbClient, "mycity", "users");
+usersRepository.Init(function (err) { if (err) throw err; });
+
+var usersController = new UsersContoller.UsersController(usersRepository);
+
+app.post('/users', usersController.AddUser.bind(usersController));
 
 var instagramRepository = new InstagramRepository.InstagramRepository();
 var instagramController = new InstagramContoller.InstagramController(instagramRepository);
