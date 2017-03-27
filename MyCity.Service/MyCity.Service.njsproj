@@ -41,7 +41,6 @@
     <TypeScriptCompile Include="controllers\instagram.controller.ts" />
     <TypeScriptCompile Include="controllers\cities.controller.ts" />
     <TypeScriptCompile Include="controllers\attractions.controller.ts" />
-    <TypeScriptCompile Include="controllers\users.controller.ts" />
     <TypeScriptCompile Include="models\user.document.ts" />
     <TypeScriptCompile Include="models\instagram.document.ts" />
     <TypeScriptCompile Include="models\attraction.document.ts" />
@@ -49,7 +48,6 @@
     <TypeScriptCompile Include="repository\instagram.repository.ts" />
     <TypeScriptCompile Include="repository\cities.repository.ts" />
     <TypeScriptCompile Include="repository\attractions.repository.ts" />
-    <TypeScriptCompile Include="repository\users.repository.ts" />
     <TypeScriptCompile Include="repository\trails.repository.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
