@@ -72,7 +72,7 @@ export class TrailsController {
                 throw (err);
             }
 
-            res.redirect('/');
+            res.status(201).json(item);
         });
 
     }
@@ -94,7 +94,7 @@ export class TrailsController {
             if (err) {
                 throw err;
             } else {
-                res.redirect('/');
+                res.status(200).json(completedTasks);
             }
         });
 
