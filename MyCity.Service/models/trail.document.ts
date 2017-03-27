@@ -18,29 +18,16 @@ export class TrailDocument implements NewDocument<TrailDocument>,
     region: string;    //ie: Tri-city
     difficulty: string;  // hard, medium, easy
     time: number;   // hours/minutes
-    distance: number;  // ie: from Vanouver
+    roundTrip: number;
     camping: boolean;  
     dogFriendly: boolean;
     publicTransit: boolean;
-    mapImages: {
-        path: string,
-        title: string
-    }[];
     images: {
         path: string,
         title: string
     }[];
-    geoLocation: {
-        address: string;
-        coordinates: number[];
-    };
-    comments: {
-        user: string,
-        email: string,
-        comment: string,
-        images: {
-            path: string,
-            title: string
-        }[];
-    }[];
+    address: string;
+    lang: number;
+    alt: number;
+    approvers: string[]; // email address of people who approved
  }
